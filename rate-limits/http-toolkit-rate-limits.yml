@@ -1,0 +1,47 @@
+name: HTTP Toolkit Rate Limits
+description: Rate limit information for HTTP Toolkit. As an open-source local proxy
+  tool, HTTP Toolkit runs entirely on the user's machine and does not enforce cloud-side
+  rate limits on traffic interception or proxy operations. Limits are effectively bounded
+  by local system resources. The subscription API and account management endpoints
+  may have standard web service rate limits applied.
+specificationVersion: '0.1'
+url: https://httptoolkit.com/docs/faq/accounts/
+rateLimits:
+  - name: Local Proxy Traffic
+    description: HTTP Toolkit's core proxy runs locally on the user's machine. There
+      are no externally imposed rate limits on the volume of HTTP/HTTPS traffic that
+      can be intercepted, inspected, or mocked. Throughput is bounded by local CPU,
+      memory, and network bandwidth.
+    scope: local
+    limit: unlimited
+    window: null
+    notes: Performance is constrained by local system hardware rather than service-imposed
+      quotas.
+  - name: Mockttp Proxy Server
+    description: The embedded Mockttp proxy server listens on localhost port 45456.
+      No rate limiting is applied to proxy operations. Designed for high-volume local
+      development and test traffic.
+    scope: local
+    port: 45456
+    limit: unlimited
+    window: null
+    notes: Suitable for high-throughput automated testing and CI/CD pipelines.
+  - name: GraphQL Management API
+    description: The local GraphQL management server listens on localhost port 45457.
+      No formal rate limits are enforced for management operations in local deployments.
+      Authenticated via HTK_SERVER_TOKEN environment variable.
+    scope: local
+    port: 45457
+    limit: unlimited
+    window: null
+    authentication: token
+    notes: Token authentication provides security on localhost; CORS requests are blocked.
+  - name: Account and Subscription API
+    description: HTTP Toolkit's account management and subscription validation endpoints
+      are hosted externally. Standard web-service rate limits apply to license checks
+      and account operations. Exact limits are not publicly documented.
+    scope: cloud
+    limit: not-publicly-documented
+    window: null
+    notes: Contact HTTP Toolkit support for details on account API rate limits if building
+      integrations that require frequent license validation calls.

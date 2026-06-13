@@ -1,0 +1,63 @@
+name: HTTP Toolkit Plans and Pricing
+description: Pricing plans for HTTP Toolkit, an open-source HTTP(S) debugging proxy
+  and developer tool. Offers a free Hobbyist tier and paid Professional and Team tiers
+  with advanced features for automated mocking, API validation, and team collaboration.
+specificationVersion: '0.1'
+url: https://httptoolkit.com/pricing/
+plans:
+  - name: Hobbyist
+    description: Free plan with core HTTP interception, inspection, and manual rewriting
+      features. Suitable for individual developers learning or doing basic HTTP debugging.
+    price: 0
+    currency: USD
+    billingCycle: free
+    features:
+      - Basic traffic interception and inspection for HTTP and HTTPS
+      - Manual traffic rewriting with breakpoints
+      - Built-in HTTP client for crafting requests
+      - Support for Windows, Linux, and Mac
+      - One-click interception for browsers and common runtimes
+      - Open-source core via AGPL-3.0 license
+    limits:
+      apis: unlimited
+      interceptors: unlimited
+      support: community
+  - name: Professional
+    description: Paid plan for professional developers requiring advanced automation,
+      API documentation validation, and import/export of traffic and mock rules. Billed
+      monthly or annually (25% savings with annual).
+    price: 14
+    currency: USD
+    billingCycle: monthly
+    annualDiscount: 25
+    features:
+      - All Hobbyist features
+      - Automated HTTP mocking and rewriting rules
+      - Import and export of traffic captures and mock rules
+      - API documentation and validation for 2600 plus services
+      - Advanced compression and caching analysis
+      - Advanced HTTP debugging and customization options
+      - Priority support
+    limits:
+      users: 1
+      apis: unlimited
+      interceptors: unlimited
+  - name: Team
+    description: Per-user plan for teams requiring centralized billing, team management,
+      and upcoming collaborative workspaces. Custom licensing, private support, and
+      self-hosted infrastructure options available on request.
+    price: null
+    currency: USD
+    billingCycle: monthly
+    contactForPricing: true
+    features:
+      - All Professional features
+      - Centralized billing and team management
+      - Team workspace collaboration (upcoming)
+      - Custom licensing options
+      - Private dedicated support
+      - Self-hosted infrastructure option
+    limits:
+      users: unlimited
+      apis: unlimited
+      interceptors: unlimited

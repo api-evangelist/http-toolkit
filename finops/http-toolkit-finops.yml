@@ -1,0 +1,94 @@
+name: HTTP Toolkit FinOps Framework
+description: FinOps Framework FOCUS-aligned cost and value analysis for HTTP Toolkit,
+  an open-source HTTP(S) debugging proxy tool with a freemium subscription model.
+  Cost management centers on plan selection, seat counts for teams, and the value
+  of reduced debugging time and improved developer productivity.
+specificationVersion: '1.0'
+url: https://httptoolkit.com/pricing/
+framework: FinOps FOCUS 1.0
+costs:
+  - name: Hobbyist Plan
+    description: No-cost tier providing core HTTP interception and inspection capabilities.
+      Suitable for individual developers, students, and open-source contributors.
+    skuId: hobbyist-free
+    chargeType: Usage
+    billedCurrency: USD
+    listUnitPrice: 0
+    billingPeriod: Monthly
+    pricingQuantity: 1
+    pricingUnit: User/Month
+    tags:
+      - free
+      - individual
+      - open-source
+  - name: Professional Plan - Monthly
+    description: Monthly subscription for individual professional developers requiring
+      automated mocking, API validation against 2600 plus services, and import/export
+      of rules and traffic captures.
+    skuId: professional-monthly
+    chargeType: Usage
+    billedCurrency: USD
+    listUnitPrice: 14
+    billingPeriod: Monthly
+    pricingQuantity: 1
+    pricingUnit: User/Month
+    tags:
+      - professional
+      - individual
+      - monthly
+  - name: Professional Plan - Annual
+    description: Annual subscription for individual professional developers, billed
+      yearly with approximately 25 percent savings compared to monthly billing.
+    skuId: professional-annual
+    chargeType: Usage
+    billedCurrency: USD
+    listUnitPrice: 10.50
+    billingPeriod: Annual
+    pricingQuantity: 1
+    pricingUnit: User/Month
+    effectiveUnitPrice: 126
+    effectiveBillingPeriod: Annual
+    tags:
+      - professional
+      - individual
+      - annual
+      - discount
+  - name: Team Plan - Per Seat
+    description: Per-user monthly team plan with centralized billing, team management,
+      and upcoming collaborative workspaces. Custom and self-hosted licensing available.
+      Contact sales for exact pricing.
+    skuId: team-per-seat
+    chargeType: Usage
+    billedCurrency: USD
+    listUnitPrice: null
+    billingPeriod: Monthly
+    pricingQuantity: 1
+    pricingUnit: User/Month
+    contactForPricing: true
+    tags:
+      - team
+      - per-seat
+      - enterprise
+optimization:
+  - name: Use Annual Billing for Professional
+    description: Switching from monthly to annual Professional billing saves approximately
+      25 percent on subscription costs for long-term individual users.
+    savingsEstimate: 25%
+    applicablePlans:
+      - professional-monthly
+    recommendedPlan: professional-annual
+  - name: Free Tier for Non-Production Use
+    description: The Hobbyist free plan provides full core interception and manual
+      rewriting capabilities. Teams can reduce costs by reserving paid seats for developers
+      who regularly use automated rules, API validation, or import/export workflows.
+    savingsEstimate: variable
+    applicablePlans:
+      - professional-monthly
+      - professional-annual
+  - name: Self-Hosted Infrastructure
+    description: The Team plan offers a self-hosted infrastructure option that may
+      reduce per-seat cloud dependency costs for large organizations with existing
+      on-premises tooling budgets.
+    savingsEstimate: variable
+    applicablePlans:
+      - team-per-seat
