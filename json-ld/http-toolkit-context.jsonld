@@ -1,0 +1,146 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "httptoolkit": "https://httptoolkit.com/vocab#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Interceptor": "httptoolkit:Interceptor",
+    "ProxyConfig": "httptoolkit:ProxyConfig",
+    "SystemProxy": "httptoolkit:SystemProxy",
+    "NetworkInterface": "httptoolkit:NetworkInterface",
+    "RequestDefinition": "httptoolkit:RequestDefinition",
+    "RequestOptions": "httptoolkit:RequestOptions",
+    "ClientCertificate": "httptoolkit:ClientCertificate",
+    "ResponseStreamEvent": "httptoolkit:ResponseStreamEvent",
+
+    "id": "@id",
+    "type": "@type",
+
+    "version": {
+      "@id": "schema:version",
+      "@type": "xsd:string"
+    },
+    "isActivable": {
+      "@id": "httptoolkit:isActivable",
+      "@type": "xsd:boolean"
+    },
+    "isActive": {
+      "@id": "httptoolkit:isActive",
+      "@type": "xsd:boolean"
+    },
+    "metadata": {
+      "@id": "httptoolkit:metadata"
+    },
+    "certificatePath": {
+      "@id": "httptoolkit:certificatePath",
+      "@type": "xsd:string"
+    },
+    "certificateContent": {
+      "@id": "httptoolkit:certificateContent",
+      "@type": "xsd:string"
+    },
+    "certificateFingerprint": {
+      "@id": "httptoolkit:certificateFingerprint",
+      "@type": "xsd:string"
+    },
+    "systemProxy": {
+      "@id": "httptoolkit:systemProxy",
+      "@type": "@id"
+    },
+    "proxyUrl": {
+      "@id": "httptoolkit:proxyUrl",
+      "@type": "xsd:anyURI"
+    },
+    "noProxy": {
+      "@id": "httptoolkit:noProxy",
+      "@container": "@list"
+    },
+    "ruleParameterKeys": {
+      "@id": "httptoolkit:ruleParameterKeys",
+      "@container": "@list"
+    },
+    "networkInterfaces": {
+      "@id": "httptoolkit:networkInterfaces"
+    },
+    "address": {
+      "@id": "schema:addressValue",
+      "@type": "xsd:string"
+    },
+    "netmask": {
+      "@id": "httptoolkit:netmask",
+      "@type": "xsd:string"
+    },
+    "family": {
+      "@id": "httptoolkit:addressFamily",
+      "@type": "xsd:string"
+    },
+    "mac": {
+      "@id": "httptoolkit:macAddress",
+      "@type": "xsd:string"
+    },
+    "internal": {
+      "@id": "httptoolkit:isInternalInterface",
+      "@type": "xsd:boolean"
+    },
+    "cidr": {
+      "@id": "httptoolkit:cidrNotation",
+      "@type": "xsd:string"
+    },
+    "method": {
+      "@id": "httptoolkit:httpMethod",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "schema:url",
+      "@type": "xsd:anyURI"
+    },
+    "headers": {
+      "@id": "httptoolkit:httpHeaders"
+    },
+    "rawBody": {
+      "@id": "httptoolkit:rawBody",
+      "@type": "xsd:base64Binary"
+    },
+    "pfx": {
+      "@id": "httptoolkit:pfxCertificate",
+      "@type": "xsd:base64Binary"
+    },
+    "passphrase": {
+      "@id": "httptoolkit:certificatePassphrase",
+      "@type": "xsd:string"
+    },
+    "timestamp": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:decimal"
+    },
+    "statusCode": {
+      "@id": "httptoolkit:httpStatusCode",
+      "@type": "xsd:integer"
+    },
+    "statusMessage": {
+      "@id": "httptoolkit:httpStatusMessage",
+      "@type": "xsd:string"
+    },
+    "interceptors": {
+      "@id": "httptoolkit:interceptors",
+      "@container": "@set"
+    },
+    "success": {
+      "@id": "httptoolkit:operationSuccess",
+      "@type": "xsd:boolean"
+    },
+    "error": {
+      "@id": "httptoolkit:errorMessage",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    }
+  }
+}

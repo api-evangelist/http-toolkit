@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/http-toolkit/main/json-schema/http-toolkit-proxy-config.json",
+  "title": "HTTP Toolkit Proxy Configuration",
+  "description": "Configuration for the HTTP Toolkit local proxy, including CA certificate details and system proxy settings used for HTTPS interception.",
+  "type": "object",
+  "required": ["certificatePath", "certificateContent", "certificateFingerprint"],
+  "properties": {
+    "certificatePath": {
+      "type": "string",
+      "description": "Absolute filesystem path to the PEM-encoded CA certificate used to intercept HTTPS traffic.",
+      "examples": ["/home/user/.config/httptoolkit/ca.pem", "/Users/user/Library/Application Support/httptoolkit/ca.pem"]
+    },
+    "certificateContent": {
+      "type": "string",
+      "description": "PEM-encoded content of the CA certificate. Clients can use this to trust the certificate programmatically."
+    },
+    "certificateFingerprint": {
+      "type": "string",
+      "description": "SHA-256 fingerprint of the CA certificate for pinning and verification.",
+      "examples": ["sha256/AbCdEf123456..."]
+    },
+    "systemProxy": {
+      "type": "object",
+      "description": "Details of the host system's configured proxy, if any.",
+      "required": ["proxyUrl"],
+      "properties": {
+        "proxyUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the system proxy server.",
+          "examples": ["http://proxy.corp.example.com:8080"]
+        },
+        "noProxy": {
+          "type": "array",
+          "description": "List of hostnames or IP ranges that bypass the system proxy.",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["localhost", "127.0.0.1", "*.internal.example.com"]]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ruleParameterKeys": {
+      "type": "array",
+      "description": "Keys of currently active rule parameters configured in the HTTP Toolkit UI.",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

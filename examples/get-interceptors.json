@@ -1,0 +1,62 @@
+{
+  "title": "Get Interceptors",
+  "description": "Example request and response for GET /interceptors, listing all available interceptors and their current state.",
+  "request": {
+    "method": "GET",
+    "url": "http://localhost:45456/interceptors?proxyPort=8000",
+    "headers": {
+      "Authorization": "Bearer <token>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "interceptors": [
+        {
+          "id": "fresh-chrome",
+          "version": "1.0.0",
+          "isActivable": true,
+          "isActive": false,
+          "metadata": {
+            "browserVersion": "120.0.6099.130"
+          }
+        },
+        {
+          "id": "fresh-firefox",
+          "version": "1.0.0",
+          "isActivable": true,
+          "isActive": false,
+          "metadata": {
+            "browserVersion": "121.0"
+          }
+        },
+        {
+          "id": "android-adb",
+          "version": "1.0.0",
+          "isActivable": true,
+          "isActive": false,
+          "metadata": {
+            "devices": []
+          }
+        },
+        {
+          "id": "docker-attach",
+          "version": "1.0.0",
+          "isActivable": true,
+          "isActive": false,
+          "metadata": null
+        },
+        {
+          "id": "fresh-node-process",
+          "version": "1.0.0",
+          "isActivable": true,
+          "isActive": false,
+          "metadata": null
+        }
+      ]
+    }
+  }
+}

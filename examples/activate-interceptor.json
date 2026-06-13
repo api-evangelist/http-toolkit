@@ -1,0 +1,27 @@
+{
+  "title": "Activate Chrome Interceptor",
+  "description": "Example request and response for POST /interceptors/{id}/activate/{proxyPort}, activating the fresh-chrome interceptor on proxy port 8000.",
+  "request": {
+    "method": "POST",
+    "url": "http://localhost:45456/interceptors/fresh-chrome/activate/8000",
+    "headers": {
+      "Authorization": "Bearer <token>",
+      "Content-Type": "application/json"
+    },
+    "body": {}
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "result": {
+        "success": true,
+        "metadata": {
+          "port": 8000
+        }
+      }
+    }
+  }
+}

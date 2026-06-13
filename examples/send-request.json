@@ -1,0 +1,52 @@
+{
+  "title": "Send HTTP Request Through Proxy",
+  "description": "Example request and streaming NDJSON response for POST /client/send, sending an HTTP GET request through the proxy and receiving a streamed response.",
+  "request": {
+    "method": "POST",
+    "url": "http://localhost:45456/client/send",
+    "headers": {
+      "Authorization": "Bearer <token>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "request": {
+        "method": "GET",
+        "url": "https://httpbin.org/get",
+        "headers": {
+          "Accept": "application/json"
+        },
+        "rawBody": ""
+      },
+      "options": {
+        "trustAdditionalCAs": false
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/x-ndjson"
+    },
+    "body_stream": [
+      {
+        "type": "response-start",
+        "timestamp": 1234567890.123,
+        "statusCode": 200,
+        "statusMessage": "OK",
+        "headers": {
+          "content-type": "application/json",
+          "content-length": "342"
+        }
+      },
+      {
+        "type": "response-body-part",
+        "timestamp": 1234567890.456,
+        "rawBody": "eyJ1cmwiOiAiaHR0cHM6Ly9odHRwYmluLm9yZy9nZXQifQ=="
+      },
+      {
+        "type": "response-end",
+        "timestamp": 1234567890.789
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Get Server Version",
+  "description": "Example request and response for the GET /version endpoint.",
+  "request": {
+    "method": "GET",
+    "url": "http://localhost:45456/version",
+    "headers": {
+      "Authorization": "Bearer <token>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "version": "1.3.2"
+    }
+  }
+}

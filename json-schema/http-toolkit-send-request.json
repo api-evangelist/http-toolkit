@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/http-toolkit/main/json-schema/http-toolkit-send-request.json",
+  "title": "HTTP Toolkit Send Request",
+  "description": "Request body for the /client/send endpoint, defining the HTTP request to send through the proxy and the options controlling how it is sent.",
+  "type": "object",
+  "required": ["request", "options"],
+  "properties": {
+    "request": {
+      "type": "object",
+      "title": "Request Definition",
+      "description": "The HTTP request to send.",
+      "required": ["method", "url"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "HTTP method to use.",
+          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE"],
+          "examples": ["GET", "POST"]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Fully-qualified URL to send the request to.",
+          "examples": ["https://api.example.com/v1/users"]
+        },
+        "headers": {
+          "type": "object",
+          "description": "HTTP headers to include in the request.",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "examples": [{"Content-Type": "application/json", "Authorization": "Bearer token123"}]
+        },
+        "rawBody": {
+          "type": "string",
+          "contentEncoding": "base64",
+          "description": "Base64-encoded request body bytes. Omit or use empty string for requests with no body."
+        }
+      },
+      "additionalProperties": false
+    },
+    "options": {
+      "type": "object",
+      "title": "Request Options",
+      "description": "Options that control how the request is sent through the proxy.",
+      "properties": {
+        "trustAdditionalCAs": {
+          "type": "boolean",
+          "description": "If true, trusts additional CA certificates beyond the system's default trust store."
+        },
+        "clientCertificate": {
+          "type": "object",
+          "title": "Client Certificate",
+          "description": "Client TLS certificate to use for mutual TLS authentication.",
+          "required": ["pfx"],
+          "properties": {
+            "pfx": {
+              "type": "string",
+              "contentEncoding": "base64",
+              "description": "Base64-encoded PKCS#12 (.pfx/.p12) certificate bundle."
+            },
+            "passphrase": {
+              "type": "string",
+              "description": "Passphrase to decrypt the PKCS#12 bundle, if encrypted."
+            }
+          },
+          "additionalProperties": false
+        },
+        "proxyConfig": {
+          "type": "object",
+          "description": "Per-request proxy configuration overrides.",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

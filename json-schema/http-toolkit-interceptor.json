@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/http-toolkit/main/json-schema/http-toolkit-interceptor.json",
+  "title": "HTTP Toolkit Interceptor",
+  "description": "Represents an HTTP Toolkit interceptor that can capture and proxy traffic for a specific environment or application (e.g., Chrome, Android, Docker, Node.js).",
+  "type": "object",
+  "required": ["id", "version", "isActivable", "isActive"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the interceptor, typically a kebab-case name indicating the target environment.",
+      "examples": ["fresh-chrome", "fresh-firefox", "android-adb", "docker-attach", "fresh-node-process"]
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version of the interceptor implementation.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+",
+      "examples": ["1.0.0", "2.1.0"]
+    },
+    "isActivable": {
+      "type": "boolean",
+      "description": "Whether this interceptor can be activated on the current system (e.g., Chrome must be installed for the Chrome interceptor to be activable)."
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether this interceptor is currently actively intercepting traffic."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Summary-level metadata specific to this interceptor type. Structure varies by interceptor.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
