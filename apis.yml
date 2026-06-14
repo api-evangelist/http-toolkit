@@ -12,61 +12,63 @@ specificationVersion: '0.19'
 aid: http-toolkit
 type: Index
 tags:
-  - HTTP
-  - HTTPS
-  - Debugging
-  - Proxy
+- HTTP
+- HTTPS
+- Debugging
+- Proxy
+- Interception
+- Mocking
+- Testing
+- Developer Tools
+- Open Source
+apis:
+- name: HTTP Toolkit Server API
+  description: The backend REST and GraphQL API exposed by the HTTP Toolkit server,
+    used to start and manage the local proxy, launch intercepted applications, manage
+    interception rules, and handle certificate operations. Listens on localhost with
+    token-based authentication for security.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://httptoolkit.com/docs/
+  baseURL: http://localhost:45456
+  tags:
+  - HTTP Proxy
   - Interception
   - Mocking
-  - Testing
-  - Developer Tools
-  - Open Source
-apis:
-  - name: HTTP Toolkit Server API
-    description: The backend REST and GraphQL API exposed by the HTTP Toolkit server,
-      used to start and manage the local proxy, launch intercepted applications, manage
-      interception rules, and handle certificate operations. Listens on localhost with
-      token-based authentication for security.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://httptoolkit.com/docs/
-    baseURL: http://localhost:45456
-    tags:
-      - HTTP Proxy
-      - Interception
-      - Mocking
-      - Debugging
-    properties:
-      - type: Documentation
-        url: https://httptoolkit.com/docs/
-      - type: GitHubRepository
-        url: https://github.com/httptoolkit/httptoolkit-server
-      - type: OpenAPI
-        url: https://github.com/httptoolkit/httptoolkit-server/blob/main/src/api/rest-api.ts
-common:
-  - type: Website
-    url: https://httptoolkit.com
+  - Debugging
+  properties:
   - type: Documentation
     url: https://httptoolkit.com/docs/
-  - type: GitHubOrg
-    url: https://github.com/httptoolkit
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/http-toolkit
-  - type: Blog
-    url: https://httptoolkit.com/blog/
-  - type: Pricing
-    url: https://httptoolkit.com/pricing/
-  - type: X
-    url: https://twitter.com/httptoolkit
-  - type: Bluesky
-    url: https://bsky.app/profile/httptoolkit.com
-  - type: Mastodon
-    url: https://mastodon.social/@httptoolkit
-  - type: Plans
-    url: plans/http-toolkit-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/http-toolkit-rate-limits.yml
-  - type: FinOps
-    url: finops/http-toolkit-finops.yml
+  - type: GitHubRepository
+    url: https://github.com/httptoolkit/httptoolkit-server
+  - type: OpenAPI
+    url: https://github.com/httptoolkit/httptoolkit-server/blob/main/src/api/rest-api.ts
+  - url: graphql/http-toolkit-graphql.md
+    type: GraphQL
+common:
+- type: Website
+  url: https://httptoolkit.com
+- type: Documentation
+  url: https://httptoolkit.com/docs/
+- type: GitHubOrg
+  url: https://github.com/httptoolkit
+- type: LinkedIn
+  url: https://www.linkedin.com/company/http-toolkit
+- type: Blog
+  url: https://httptoolkit.com/blog/
+- type: Pricing
+  url: https://httptoolkit.com/pricing/
+- type: X
+  url: https://twitter.com/httptoolkit
+- type: Bluesky
+  url: https://bsky.app/profile/httptoolkit.com
+- type: Mastodon
+  url: https://mastodon.social/@httptoolkit
+- type: Plans
+  url: plans/http-toolkit-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/http-toolkit-rate-limits.yml
+- type: FinOps
+  url: finops/http-toolkit-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

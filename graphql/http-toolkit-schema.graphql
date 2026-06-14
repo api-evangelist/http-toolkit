@@ -1,0 +1,640 @@
+"""
+HTTP Toolkit GraphQL Schema
+Conceptual schema derived from the HTTP Toolkit open-source data model.
+Sources: httptoolkit-server, httptoolkit-ui, and the Mockttp proxy library.
+https://github.com/httptoolkit
+"""
+
+scalar DateTime
+scalar JSON
+scalar Bytes
+
+# ─────────────────────────────────────────
+# Root Operations
+# ─────────────────────────────────────────
+
+type Query {
+  "Retrieve the current active proxy session."
+  proxySession: ProxySession
+
+  "List all HTTP exchanges captured in the current session."
+  exchanges(limit: Int, offset: Int, filter: ExchangeFilter): [HttpExchange!]!
+
+  "Fetch a single HTTP exchange by ID."
+  exchange(id: ID!): HttpExchange
+
+  "List all configured interception rules."
+  rules: [Rule!]!
+
+  "Fetch a single rule by ID."
+  rule(id: ID!): Rule
+
+  "List all available interceptors (browsers, CLIs, Docker, Android, etc.)."
+  interceptors: [Interceptor!]!
+
+  "Fetch a single interceptor by ID."
+  interceptor(id: ID!): Interceptor
+
+  "List active remote clients connected to the proxy."
+  remoteClients: [RemoteClient!]!
+
+  "Retrieve the current CA certificate used for HTTPS interception."
+  certificate: Certificate
+
+  "List API integrations configured in the current session."
+  apiIntegrations: [ApiIntegration!]!
+
+  "List open ports used by the proxy."
+  ports: [Port!]!
+}
+
+type Mutation {
+  "Start a new proxy session on the specified port."
+  startSession(port: Int, config: ProxySessionConfig): ProxySession!
+
+  "Stop the current proxy session."
+  stopSession(id: ID!): Boolean!
+
+  "Add or update a rule in the rules engine."
+  upsertRule(input: RuleInput!): Rule!
+
+  "Delete a rule by ID."
+  deleteRule(id: ID!): Boolean!
+
+  "Reorder rules; provide ordered list of rule IDs."
+  reorderRules(ids: [ID!]!): [Rule!]!
+
+  "Launch an application through an interceptor."
+  launchInterceptor(interceptorId: ID!, config: JSON): Interceptor!
+
+  "Clear all captured exchanges from the current session."
+  clearExchanges: Boolean!
+
+  "Resume a paused exchange at a breakpoint, optionally modifying it."
+  resumeBreakpoint(exchangeId: ID!, data: BreakpointInput!): HttpExchange!
+
+  "Abort an exchange held at a breakpoint."
+  abortBreakpoint(exchangeId: ID!): Boolean!
+
+  "Export the CA certificate in PEM or DER format."
+  exportCertificate(format: CertificateFormat!): String!
+}
+
+type Subscription {
+  "Stream new HTTP exchanges as they are captured."
+  exchangeCaptured: HttpExchange!
+
+  "Stream updates to existing exchanges (e.g. response received, body decoded)."
+  exchangeUpdated(id: ID): HttpExchange!
+
+  "Stream breakpoint events requiring user action."
+  breakpointHit: BreakpointData!
+
+  "Stream proxy session status changes."
+  sessionStatus: ProxySession!
+}
+
+# ─────────────────────────────────────────
+# HTTP Exchange
+# ─────────────────────────────────────────
+
+"A complete HTTP request/response pair captured by the proxy."
+type HttpExchange {
+  id: ID!
+  "Timestamp when the request was received."
+  timestamp: DateTime!
+  request: HttpRequest!
+  response: HttpResponse
+  "Whether the exchange is currently paused at a breakpoint."
+  breakpoint: BreakpointData
+  "Which rule (if any) matched and handled this exchange."
+  matchedRule: Rule
+  "Whether this exchange is currently in flight (no response yet)."
+  pending: Boolean!
+  "Whether the exchange was aborted before a response was received."
+  aborted: Boolean!
+  tags: [String!]!
+}
+
+input ExchangeFilter {
+  method: [HttpMethod!]
+  statusCode: [Int!]
+  hostname: String
+  pathContains: String
+  tagContains: String
+  pending: Boolean
+  aborted: Boolean
+  fromTimestamp: DateTime
+  toTimestamp: DateTime
+}
+
+# ─────────────────────────────────────────
+# HTTP Request
+# ─────────────────────────────────────────
+
+"An HTTP request intercepted by the proxy."
+type HttpRequest {
+  id: ID!
+  method: HttpMethod!
+  url: String!
+  path: String!
+  hostname: String!
+  port: Int
+  protocol: HttpProtocol!
+  httpVersion: String!
+  headers: [HttpHeader!]!
+  body: HttpBody
+  "Parsed query parameters from the URL."
+  queryParams: [KeyValuePair!]!
+  timestamp: DateTime!
+  "Source IP address of the originating client."
+  remoteAddress: String
+}
+
+# ─────────────────────────────────────────
+# HTTP Response
+# ─────────────────────────────────────────
+
+"An HTTP response returned through the proxy."
+type HttpResponse {
+  statusCode: Int!
+  statusMessage: String!
+  headers: [HttpHeader!]!
+  body: HttpBody
+  timestamp: DateTime!
+  "Elapsed time in milliseconds from request sent to response received."
+  timingMs: Float
+}
+
+# ─────────────────────────────────────────
+# HTTP Body
+# ─────────────────────────────────────────
+
+"The body of an HTTP request or response."
+type HttpBody {
+  "Raw bytes of the body (base64-encoded)."
+  raw: Bytes
+  "Decoded text content (if decodable)."
+  text: String
+  "Parsed JSON value (if Content-Type is application/json)."
+  json: JSON
+  "Content encoding (e.g. gzip, br, identity)."
+  encoding: String
+  "Content-Type header value."
+  contentType: String
+  "Size of the decoded body in bytes."
+  decodedSizeBytes: Int
+}
+
+# ─────────────────────────────────────────
+# HTTP Header
+# ─────────────────────────────────────────
+
+"A single HTTP header name/value pair."
+type HttpHeader {
+  name: String!
+  value: String!
+}
+
+type KeyValuePair {
+  key: String!
+  value: String!
+}
+
+# ─────────────────────────────────────────
+# Certificate
+# ─────────────────────────────────────────
+
+"The CA certificate used for HTTPS interception (MITM)."
+type Certificate {
+  "PEM-encoded certificate."
+  pem: String!
+  "SHA-256 fingerprint of the certificate."
+  fingerprint: String!
+  "Certificate subject (CN, O, etc.)."
+  subject: String!
+  "Certificate issuer."
+  issuer: String!
+  validFrom: DateTime!
+  validTo: DateTime!
+  "Path on disk where the certificate is stored."
+  filePath: String
+}
+
+enum CertificateFormat {
+  PEM
+  DER
+  P12
+}
+
+# ─────────────────────────────────────────
+# Rule
+# ─────────────────────────────────────────
+
+"An interception rule that matches requests and applies an action."
+type Rule {
+  id: ID!
+  "Human-readable name for display in the UI."
+  name: String
+  enabled: Boolean!
+  "Priority order; lower numbers run first."
+  priority: Int!
+  "One or more matchers that must all match for the rule to fire."
+  matchers: [Matcher!]!
+  "The action to take when this rule matches."
+  action: RuleAction!
+  "How many times this rule has been triggered in the current session."
+  matchCount: Int!
+}
+
+input RuleInput {
+  id: ID
+  name: String
+  enabled: Boolean
+  priority: Int
+  matchers: [MatcherInput!]!
+  action: RuleActionInput!
+}
+
+# ─────────────────────────────────────────
+# Matcher
+# ─────────────────────────────────────────
+
+"A condition that is evaluated against an incoming request."
+type Matcher {
+  type: MatcherType!
+  "Type-specific configuration (e.g. regex pattern, header name/value)."
+  config: JSON
+  "Human-readable description of what this matcher checks."
+  description: String
+}
+
+input MatcherInput {
+  type: MatcherType!
+  config: JSON
+}
+
+enum MatcherType {
+  "Match any request (wildcard)."
+  WILDCARD
+  "Match by HTTP method."
+  METHOD
+  "Match by exact URL."
+  URL_EXACT
+  "Match by URL regex pattern."
+  URL_REGEX
+  "Match by URL path prefix."
+  PATH_PREFIX
+  "Match by hostname."
+  HOSTNAME
+  "Match by request header presence or value."
+  HEADER
+  "Match by query parameter."
+  QUERY_PARAM
+  "Match by request body containing a string."
+  BODY_CONTAINS
+  "Match by JSON body matching a JSONPath expression."
+  BODY_JSONPATH
+  "Match by port number."
+  PORT
+  "Match by IP address or CIDR range."
+  IP_RANGE
+}
+
+# ─────────────────────────────────────────
+# Rule Action
+# ─────────────────────────────────────────
+
+"The action applied to a request when a rule matches."
+type RuleAction {
+  type: RuleActionType!
+  "Type-specific configuration for the action."
+  config: JSON
+  "For MOCK_RESPONSE actions, the full mock response definition."
+  mockResponse: MockResponse
+}
+
+input RuleActionInput {
+  type: RuleActionType!
+  config: JSON
+  mockResponse: MockResponseInput
+}
+
+enum RuleActionType {
+  "Forward the request to the real server (transparent proxy)."
+  PASSTHROUGH
+  "Return a static or templated mock response."
+  MOCK_RESPONSE
+  "Pause the exchange at a breakpoint for manual editing."
+  BREAKPOINT_REQUEST
+  "Pause the response at a breakpoint for manual editing."
+  BREAKPOINT_RESPONSE
+  "Close the connection without responding."
+  CLOSE_CONNECTION
+  "Timeout without responding (simulate a hung server)."
+  TIMEOUT
+  "Reset the connection (send TCP RST)."
+  RESET_CONNECTION
+  "Forward to a different URL (rewrite)."
+  FORWARD_TO_URL
+}
+
+# ─────────────────────────────────────────
+# Mock Response
+# ─────────────────────────────────────────
+
+"A fully specified mock HTTP response returned by a MOCK_RESPONSE rule."
+type MockResponse {
+  statusCode: Int!
+  statusMessage: String
+  headers: [HttpHeader!]!
+  body: MockBody
+  "Delay in milliseconds before sending the response."
+  delayMs: Int
+}
+
+input MockResponseInput {
+  statusCode: Int!
+  statusMessage: String
+  headers: [HttpHeaderInput!]
+  body: MockBodyInput
+  delayMs: Int
+}
+
+type MockBody {
+  type: MockBodyType!
+  "Raw text or template string."
+  content: String
+  "Content-Type to use in the response."
+  contentType: String
+}
+
+input MockBodyInput {
+  type: MockBodyType!
+  content: String
+  contentType: String
+}
+
+enum MockBodyType {
+  EMPTY
+  TEXT
+  JSON
+  FILE
+  FORM_DATA
+  TEMPLATE
+}
+
+input HttpHeaderInput {
+  name: String!
+  value: String!
+}
+
+# ─────────────────────────────────────────
+# Breakpoint
+# ─────────────────────────────────────────
+
+"Data associated with an exchange paused at a breakpoint."
+type BreakpointData {
+  id: ID!
+  exchangeId: ID!
+  "Whether the breakpoint is on the request or response side."
+  phase: BreakpointPhase!
+  "The request data at the breakpoint (always present)."
+  request: HttpRequest!
+  "The response data at the breakpoint (present when phase is RESPONSE)."
+  response: HttpResponse
+  timestamp: DateTime!
+}
+
+enum BreakpointPhase {
+  REQUEST
+  RESPONSE
+}
+
+input BreakpointInput {
+  "Modified request data to forward (when phase is REQUEST)."
+  request: BreakpointRequestInput
+  "Modified response data to return (when phase is RESPONSE)."
+  response: BreakpointResponseInput
+}
+
+input BreakpointRequestInput {
+  method: HttpMethod
+  url: String
+  headers: [HttpHeaderInput!]
+  body: String
+}
+
+input BreakpointResponseInput {
+  statusCode: Int
+  statusMessage: String
+  headers: [HttpHeaderInput!]
+  body: String
+}
+
+# ─────────────────────────────────────────
+# Proxy Session
+# ─────────────────────────────────────────
+
+"A running instance of the HTTP Toolkit proxy server."
+type ProxySession {
+  id: ID!
+  status: SessionStatus!
+  "Port the proxy is listening on."
+  proxyPort: Int!
+  "Port the admin/API server is listening on."
+  adminPort: Int!
+  "Host the proxy is bound to (typically 127.0.0.1)."
+  host: String!
+  "Authentication token required for API calls."
+  authToken: String
+  startedAt: DateTime!
+  "Number of exchanges captured in this session."
+  exchangeCount: Int!
+  certificate: Certificate
+}
+
+input ProxySessionConfig {
+  port: Int
+  host: String
+  https: ProxyHttpsConfig
+}
+
+input ProxyHttpsConfig {
+  "Generate a new CA certificate for this session."
+  generateCertificate: Boolean
+  "Path to an existing CA key file."
+  keyPath: String
+  "Path to an existing CA certificate file."
+  certPath: String
+}
+
+enum SessionStatus {
+  STARTING
+  RUNNING
+  STOPPING
+  STOPPED
+  ERROR
+}
+
+# ─────────────────────────────────────────
+# Interceptor
+# ─────────────────────────────────────────
+
+"An integration that can launch or attach to an application through the proxy."
+type Interceptor {
+  id: ID!
+  name: String!
+  description: String
+  type: InterceptorType!
+  "Whether this interceptor is available on the current platform."
+  isAvailable: Boolean!
+  "Whether this interceptor is currently active/running."
+  isActive: Boolean!
+  "Version of the intercepted application, if applicable."
+  version: String
+  "Metadata specific to this interceptor type."
+  metadata: JSON
+  "Applications or instances currently intercepted."
+  instances: [Application!]!
+}
+
+enum InterceptorType {
+  CHROME
+  FIREFOX
+  SAFARI
+  EDGE
+  ELECTRON
+  TERMINAL
+  DOCKER
+  ANDROID
+  JVM
+  PYTHON
+  RUBY
+  NODE
+  CUSTOM
+}
+
+# ─────────────────────────────────────────
+# Browser
+# ─────────────────────────────────────────
+
+"A browser instance launched through an interceptor."
+type Browser {
+  id: ID!
+  name: String!
+  version: String
+  "Whether the browser is currently running."
+  isRunning: Boolean!
+  "Process ID of the browser."
+  pid: Int
+  "Profile directory used for this session."
+  profilePath: String
+}
+
+# ─────────────────────────────────────────
+# Application
+# ─────────────────────────────────────────
+
+"A running application or process being intercepted."
+type Application {
+  id: ID!
+  name: String!
+  "Process ID."
+  pid: Int
+  "Path to the application executable."
+  executablePath: String
+  "Whether the application is currently intercepted."
+  intercepted: Boolean!
+  "Interceptor managing this application."
+  interceptor: Interceptor
+}
+
+# ─────────────────────────────────────────
+# Port
+# ─────────────────────────────────────────
+
+"A network port in use by the proxy or managed applications."
+type Port {
+  number: Int!
+  protocol: NetworkProtocol!
+  "What is bound to this port (proxy, admin API, etc.)."
+  usage: String
+  "Whether this port is currently active."
+  active: Boolean!
+}
+
+enum NetworkProtocol {
+  TCP
+  UDP
+  HTTP
+  HTTPS
+}
+
+# ─────────────────────────────────────────
+# Remote Client
+# ─────────────────────────────────────────
+
+"A remote device or client routed through the proxy (e.g. an Android device)."
+type RemoteClient {
+  id: ID!
+  "Display name or device label."
+  name: String
+  "IP address of the remote client."
+  remoteAddress: String!
+  "Whether the remote client is currently connected."
+  connected: Boolean!
+  "Type of remote client."
+  type: RemoteClientType!
+  connectedAt: DateTime
+}
+
+enum RemoteClientType {
+  ANDROID
+  IOS
+  REMOTE_BROWSER
+  OTHER
+}
+
+# ─────────────────────────────────────────
+# API Integration
+# ─────────────────────────────────────────
+
+"An external API integration configured to decode/display specific API traffic."
+type ApiIntegration {
+  id: ID!
+  name: String!
+  "Base URL(s) this integration applies to."
+  baseUrls: [String!]!
+  "Whether this integration is currently enabled."
+  enabled: Boolean!
+  "OpenAPI or AsyncAPI spec URL, if available."
+  specUrl: String
+  "Parsed spec data."
+  spec: JSON
+}
+
+# ─────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────
+
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  PATCH
+  DELETE
+  HEAD
+  OPTIONS
+  TRACE
+  CONNECT
+}
+
+enum HttpProtocol {
+  HTTP
+  HTTPS
+  HTTP2
+  HTTP3
+  WS
+  WSS
+}
