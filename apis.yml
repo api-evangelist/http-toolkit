@@ -4,7 +4,7 @@ description: HTTP Toolkit is a beautiful, cross-platform, and open-source tool f
   a REST API for intercepting HTTP/HTTPS traffic, inspecting requests and responses,
   automated mocking and rewriting of API traffic, and integrations with Docker, Android,
   Python, Ruby, Java, Electron, and JavaScript development workflows.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/http-toolkit/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -27,7 +27,7 @@ apis:
     used to start and manage the local proxy, launch intercepted applications, manage
     interception rules, and handle certificate operations. Listens on localhost with
     token-based authentication for security.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
   tags:
