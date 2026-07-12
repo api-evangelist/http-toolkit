@@ -45,6 +45,10 @@ apis:
   - url: graphql/http-toolkit-graphql.md
     type: GraphQL
 common:
+- type: DomainSecurity
+  url: security/http-toolkit-domain-security.yml
+- type: Authentication
+  url: authentication/http-toolkit-authentication.yml
 - type: Website
   url: https://httptoolkit.com
 - type: Documentation

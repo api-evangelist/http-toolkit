@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/http-toolkit-server-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Token-based authentication using a server-generated bearer token
+  sources:
+  - openapi/http-toolkit-server-api-openapi.yml
