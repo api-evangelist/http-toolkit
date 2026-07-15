@@ -45,6 +45,8 @@ apis:
   - url: graphql/http-toolkit-graphql.md
     type: GraphQL
 common:
+- type: AgenticAccess
+  url: agentic-access/http-toolkit-agentic-access.yml
 - type: DomainSecurity
   url: security/http-toolkit-domain-security.yml
 - type: Authentication
