@@ -1,0 +1,147 @@
+openapi: 3.0.3
+info:
+  title: HTTP Toolkit Server client API
+  description: 'The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.
+
+    '
+  version: 1.0.0
+  contact:
+    name: HTTP Toolkit
+    url: https://httptoolkit.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:45456
+  description: Local HTTP Toolkit server (default port)
+security:
+- bearerAuth: []
+tags:
+- name: client
+  description: HTTP client request sending through the proxy
+paths:
+  /client/send:
+    post:
+      summary: Send an HTTP request
+      description: 'Sends an HTTP request through the proxy and streams back the response as newline-delimited JSON (NDJSON). The response stream emits typed events including response-start, response-body-part, and response-end. Request and response body data is base64-encoded.
+
+        '
+      operationId: sendRequest
+      tags:
+      - client
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendRequestBody'
+      responses:
+        '200':
+          description: 'NDJSON stream of response events. Each line is a JSON object with a `type` field indicating the event type.
+
+            '
+          content:
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ResponseStreamEvent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  schemas:
+    RequestOptions:
+      type: object
+      properties:
+        trustAdditionalCAs:
+          type: boolean
+          description: Whether to trust additional CA certificates beyond system defaults
+        clientCertificate:
+          $ref: '#/components/schemas/ClientCertificate'
+        proxyConfig:
+          type: object
+          additionalProperties: true
+          description: Proxy configuration overrides for this specific request
+    SendRequestBody:
+      type: object
+      required:
+      - request
+      - options
+      properties:
+        request:
+          $ref: '#/components/schemas/RequestDefinition'
+        options:
+          $ref: '#/components/schemas/RequestOptions'
+    RequestDefinition:
+      type: object
+      required:
+      - method
+      - url
+      properties:
+        method:
+          type: string
+          description: HTTP method
+          example: GET
+        url:
+          type: string
+          format: uri
+          description: Target URL
+          example: https://example.com/api/data
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          description: Request headers
+        rawBody:
+          type: string
+          format: byte
+          description: Base64-encoded request body
+    ClientCertificate:
+      type: object
+      required:
+      - pfx
+      properties:
+        pfx:
+          type: string
+          format: byte
+          description: Base64-encoded PKCS#12 client certificate bundle
+        passphrase:
+          type: string
+          description: Passphrase for the PKCS#12 bundle
+    ResponseStreamEvent:
+      type: object
+      required:
+      - type
+      - timestamp
+      discriminator:
+        propertyName: type
+      properties:
+        type:
+          type: string
+          enum:
+          - response-start
+          - response-body-part
+          - response-end
+          - error
+          description: Type of stream event
+        timestamp:
+          type: number
+          description: Performance timestamp when this event occurred
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
+  responses:
+    BadRequest:
+      description: Bad request — missing or invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Token-based authentication using a server-generated bearer token

@@ -1,0 +1,227 @@
+openapi: 3.0.3
+info:
+  title: HTTP Toolkit Server client interceptors API
+  description: 'The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.
+
+    '
+  version: 1.0.0
+  contact:
+    name: HTTP Toolkit
+    url: https://httptoolkit.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:45456
+  description: Local HTTP Toolkit server (default port)
+security:
+- bearerAuth: []
+tags:
+- name: interceptors
+  description: Interceptor management for various environments and applications
+paths:
+  /interceptors:
+    get:
+      summary: List interceptors
+      description: 'Returns top-level state of all available interceptors, including whether each is activable and currently active. Supports Docker, Android, Python, Ruby, Java, Electron, and JavaScript environments.
+
+        '
+      operationId: getInterceptors
+      tags:
+      - interceptors
+      parameters:
+      - $ref: '#/components/parameters/ProxyPort'
+      responses:
+        '200':
+          description: List of interceptors with state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterceptorsResponse'
+  /interceptors/{id}/metadata:
+    get:
+      summary: Get detailed interceptor metadata
+      description: 'Returns the complete detailed metadata for a specific interceptor, including all available targets and full configuration details beyond what is returned by the list endpoint.
+
+        '
+      operationId: getInterceptorMetadata
+      tags:
+      - interceptors
+      parameters:
+      - $ref: '#/components/parameters/InterceptorId'
+      responses:
+        '200':
+          description: Detailed interceptor metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterceptorMetadataResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /interceptors/{id}/metadata/{subId}:
+    get:
+      summary: Get sub-interceptor metadata
+      description: 'Returns even more detailed metadata about a specific sub-target within a multi-target interceptor (e.g., a specific browser profile or Android device).
+
+        '
+      operationId: getInterceptorSubMetadata
+      tags:
+      - interceptors
+      parameters:
+      - $ref: '#/components/parameters/InterceptorId'
+      - name: subId
+        in: path
+        required: true
+        description: Sub-identifier for a specific target within the interceptor
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Sub-interceptor metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterceptorMetadataResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /interceptors/{id}/activate/{proxyPort}:
+    post:
+      summary: Activate an interceptor
+      description: 'Activates a specific interceptor for the given proxy port, injecting the proxy configuration into the target application or environment. The result may include success:false for non-critical failures (e.g., Chrome prompt-to-quit scenarios) without throwing an error.
+
+        '
+      operationId: activateInterceptor
+      tags:
+      - interceptors
+      parameters:
+      - $ref: '#/components/parameters/InterceptorId'
+      - name: proxyPort
+        in: path
+        required: true
+        description: Port number that the proxy is listening on
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 65535
+      requestBody:
+        description: Optional interceptor-specific activation options
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: Interceptor-specific activation options (varies by interceptor)
+      responses:
+        '200':
+          description: Activation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    InterceptorsResponse:
+      type: object
+      required:
+      - interceptors
+      properties:
+        interceptors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Interceptor'
+    ActivationResponse:
+      type: object
+      required:
+      - result
+      properties:
+        result:
+          type: object
+          additionalProperties: true
+          description: 'Activation result. May contain success:false for non-critical failures (e.g., Chrome confirmation dialogs) without an HTTP error.
+
+            '
+    InterceptorMetadataResponse:
+      type: object
+      required:
+      - interceptorMetadata
+      properties:
+        interceptorMetadata:
+          type: object
+          additionalProperties: true
+          description: Detailed metadata for the interceptor, structure varies by interceptor type
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
+    Interceptor:
+      type: object
+      required:
+      - id
+      - version
+      - isActivable
+      - isActive
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the interceptor
+          example: fresh-chrome
+        version:
+          type: string
+          description: Version of the interceptor
+          example: 1.0.0
+        isActivable:
+          type: boolean
+          description: Whether this interceptor can be activated on this system
+        isActive:
+          type: boolean
+          description: Whether this interceptor is currently active
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Summary metadata specific to this interceptor type
+  parameters:
+    ProxyPort:
+      name: proxyPort
+      in: query
+      required: false
+      description: 'The port number the Mockttp proxy is listening on. Optional — omit to query data before the proxy has started for potentially faster setup.
+
+        '
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 65535
+    InterceptorId:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier of the interceptor
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Bad request — missing or invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Token-based authentication using a server-generated bearer token

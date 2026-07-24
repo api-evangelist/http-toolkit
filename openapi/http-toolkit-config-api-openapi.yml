@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: HTTP Toolkit Server client config API
+  description: 'The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.
+
+    '
+  version: 1.0.0
+  contact:
+    name: HTTP Toolkit
+    url: https://httptoolkit.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:45456
+  description: Local HTTP Toolkit server (default port)
+security:
+- bearerAuth: []
+tags:
+- name: config
+  description: Proxy configuration and network settings
+paths:
+  /config:
+    get:
+      summary: Get proxy configuration
+      description: 'Returns the current proxy configuration including certificate details, system proxy settings, DNS servers, and rule parameter keys.
+
+        '
+      operationId: getConfig
+      tags:
+      - config
+      parameters:
+      - $ref: '#/components/parameters/ProxyPort'
+      responses:
+        '200':
+          description: Current proxy configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigResponse'
+  /config/network-interfaces:
+    get:
+      summary: Get network interfaces
+      description: Returns all available network interfaces on the host machine.
+      operationId: getNetworkInterfaces
+      tags:
+      - config
+      responses:
+        '200':
+          description: List of network interfaces
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkInterfacesResponse'
+components:
+  schemas:
+    ProxyConfig:
+      type: object
+      required:
+      - certificatePath
+      - certificateContent
+      - certificateFingerprint
+      properties:
+        certificatePath:
+          type: string
+          description: Filesystem path to the CA certificate used for HTTPS interception
+          example: /home/user/.config/httptoolkit/ca.pem
+        certificateContent:
+          type: string
+          description: PEM-encoded CA certificate content
+        certificateFingerprint:
+          type: string
+          description: SHA-256 fingerprint of the CA certificate
+          example: sha256/abc123...
+        systemProxy:
+          $ref: '#/components/schemas/SystemProxy'
+        ruleParameterKeys:
+          type: array
+          items:
+            type: string
+          description: Keys of currently configured rule parameters
+    NetworkInterface:
+      type: object
+      properties:
+        address:
+          type: string
+          description: IP address of the interface
+          example: 192.168.1.100
+        netmask:
+          type: string
+          description: Subnet mask
+          example: 255.255.255.0
+        family:
+          type: string
+          enum:
+          - IPv4
+          - IPv6
+          description: Address family
+        mac:
+          type: string
+          description: MAC address
+          example: 00:1a:2b:3c:4d:5e
+        internal:
+          type: boolean
+          description: Whether this is a loopback interface
+        cidr:
+          type: string
+          description: CIDR notation for the address
+          example: 192.168.1.100/24
+    SystemProxy:
+      type: object
+      required:
+      - proxyUrl
+      properties:
+        proxyUrl:
+          type: string
+          format: uri
+          description: URL of the system proxy
+          example: http://proxy.example.com:8080
+        noProxy:
+          type: array
+          items:
+            type: string
+          description: Hosts that should bypass the proxy
+          example:
+          - localhost
+          - 127.0.0.1
+    NetworkInterfacesResponse:
+      type: object
+      required:
+      - networkInterfaces
+      properties:
+        networkInterfaces:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/NetworkInterface'
+          description: Map of interface name to list of address entries
+    ConfigResponse:
+      type: object
+      required:
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/ProxyConfig'
+  parameters:
+    ProxyPort:
+      name: proxyPort
+      in: query
+      required: false
+      description: 'The port number the Mockttp proxy is listening on. Optional — omit to query data before the proxy has started for potentially faster setup.
+
+        '
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 65535
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Token-based authentication using a server-generated bearer token
