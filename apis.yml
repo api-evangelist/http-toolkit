@@ -4,7 +4,20 @@ description: HTTP Toolkit is a beautiful, cross-platform, and open-source tool f
   a REST API for intercepting HTTP/HTTPS traffic, inspecting requests and responses,
   automated mocking and rewriting of API traffic, and integrations with Docker, Android,
   Python, Ruby, Java, Electron, and JavaScript development workflows.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/http-toolkit.png
 url: https://raw.githubusercontent.com/api-evangelist/http-toolkit/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -22,28 +35,70 @@ tags:
 - Developer Tools
 - Open Source
 apis:
-- name: HTTP Toolkit Server API
-  description: The backend REST and GraphQL API exposed by the HTTP Toolkit server,
-    used to start and manage the local proxy, launch intercepted applications, manage
-    interception rules, and handle certificate operations. Listens on localhost with
-    token-based authentication for security.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: http-toolkit:http-toolkit-client-api
+  name: HTTP Toolkit client API
+  description: HTTP client request sending through the proxy
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
   tags:
-  - HTTP Proxy
-  - Interception
-  - Mocking
-  - Debugging
+  - client
   properties:
+  - type: OpenAPI
+    url: openapi/http-toolkit-client-api-openapi.yml
   - type: Documentation
     url: https://httptoolkit.com/docs/
   - type: GitHubRepository
     url: https://github.com/httptoolkit/httptoolkit-server
+  - type: GraphQL
+    url: graphql/http-toolkit-graphql.md
+- aid: http-toolkit:http-toolkit-config-api
+  name: HTTP Toolkit config API
+  description: Proxy configuration and network settings
+  humanURL: https://httptoolkit.com/docs/
+  baseURL: http://localhost:45456
+  tags:
+  - config
+  properties:
   - type: OpenAPI
-    url: https://github.com/httptoolkit/httptoolkit-server/blob/main/src/api/rest-api.ts
-  - url: graphql/http-toolkit-graphql.md
-    type: GraphQL
+    url: openapi/http-toolkit-config-api-openapi.yml
+  - type: Documentation
+    url: https://httptoolkit.com/docs/
+  - type: GitHubRepository
+    url: https://github.com/httptoolkit/httptoolkit-server
+  - type: GraphQL
+    url: graphql/http-toolkit-graphql.md
+- aid: http-toolkit:http-toolkit-interceptors-api
+  name: HTTP Toolkit interceptors API
+  description: Interceptor management for various environments and applications
+  humanURL: https://httptoolkit.com/docs/
+  baseURL: http://localhost:45456
+  tags:
+  - interceptors
+  properties:
+  - type: OpenAPI
+    url: openapi/http-toolkit-interceptors-api-openapi.yml
+  - type: Documentation
+    url: https://httptoolkit.com/docs/
+  - type: GitHubRepository
+    url: https://github.com/httptoolkit/httptoolkit-server
+  - type: GraphQL
+    url: graphql/http-toolkit-graphql.md
+- aid: http-toolkit:http-toolkit-server-api
+  name: HTTP Toolkit server API
+  description: Server lifecycle and version management
+  humanURL: https://httptoolkit.com/docs/
+  baseURL: http://localhost:45456
+  tags:
+  - server
+  properties:
+  - type: OpenAPI
+    url: openapi/http-toolkit-server-api-openapi.yml
+  - type: Documentation
+    url: https://httptoolkit.com/docs/
+  - type: GitHubRepository
+    url: https://github.com/httptoolkit/httptoolkit-server
+  - type: GraphQL
+    url: graphql/http-toolkit-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/http-toolkit-agentic-access.yml
