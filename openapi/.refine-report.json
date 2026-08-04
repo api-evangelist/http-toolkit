@@ -1,0 +1,20 @@
+{
+  "provider": "http-toolkit",
+  "sources": [
+    "http-toolkit-client-api-openapi.yml",
+    "http-toolkit-config-api-openapi.yml",
+    "http-toolkit-interceptors-api-openapi.yml",
+    "http-toolkit-server-api-openapi.yml"
+  ],
+  "outputs": [
+    "http-toolkit-client-api-openapi.yml",
+    "http-toolkit-config-api-openapi.yml",
+    "http-toolkit-interceptors-api-openapi.yml",
+    "http-toolkit-server-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
