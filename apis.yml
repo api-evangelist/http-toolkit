@@ -100,6 +100,13 @@ apis:
   - type: GraphQL
     url: graphql/http-toolkit-graphql.md
 common:
+- type: IssueTracker
+  url: https://github.com/httptoolkit/httptoolkit-server/issues
+- type: Releases
+  url: https://github.com/httptoolkit/httptoolkit-server/releases
+- type: License
+  name: AGPL-3.0
+  url: https://github.com/httptoolkit/httptoolkit-server/blob/main/LICENSE
 - type: AgenticAccess
   url: agentic-access/http-toolkit-agentic-access.yml
 - type: DomainSecurity
