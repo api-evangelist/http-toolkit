@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HTTP Toolkit Server client API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "client",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send an HTTP request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:45456/client/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends an HTTP request through the proxy and streams back the response as newline-delimited JSON (NDJSON). The response stream emits typed events including response-start, response-body-part, and response-end. Request and response body data is base64-encoded.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

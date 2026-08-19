@@ -1,0 +1,211 @@
+{
+  "item": [
+    {
+      "id": "2702803d-83e3-46d2-9827-22917ebb72d6",
+      "name": "config",
+      "description": {
+        "content": "Proxy configuration and network settings",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fec62c36-d48d-4177-ba56-f8f6c1f1cbad",
+          "name": "Get proxy configuration",
+          "request": {
+            "name": "Get proxy configuration",
+            "description": {
+              "content": "Returns the current proxy configuration including certificate details, system proxy settings, DNS servers, and rule parameter keys.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "proxyPort",
+                  "value": "<integer>",
+                  "description": "The port number the Mockttp proxy is listening on. Optional — omit to query data before the proxy has started for potentially faster setup.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2f37d954-7055-4122-a4dd-0f1663b6b9ce",
+              "name": "Current proxy configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "proxyPort",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"config\": {\n    \"certificatePath\": \"/home/user/.config/httptoolkit/ca.pem\",\n    \"certificateContent\": \"string\",\n    \"certificateFingerprint\": \"sha256/abc123...\",\n    \"systemProxy\": {\n      \"proxyUrl\": \"http://proxy.example.com:8080\",\n      \"noProxy\": [\n        \"localhost\",\n        \"127.0.0.1\"\n      ]\n    },\n    \"ruleParameterKeys\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0553df7f-e0f1-4a43-b25d-44950f4be77e",
+          "name": "Get network interfaces",
+          "request": {
+            "name": "Get network interfaces",
+            "description": {
+              "content": "Returns all available network interfaces on the host machine.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "network-interfaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e3ee0772-781b-41b9-b778-8bcfaf219769",
+              "name": "List of network interfaces",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "network-interfaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"networkInterfaces\": {\n    \"key_0\": [\n      {\n        \"address\": \"192.168.1.100\",\n        \"netmask\": \"255.255.255.0\",\n        \"family\": \"IPv6\",\n        \"mac\": \"00:1a:2b:3c:4d:5e\",\n        \"internal\": false,\n        \"cidr\": \"192.168.1.100/24\"\n      },\n      {\n        \"address\": \"192.168.1.100\",\n        \"netmask\": \"255.255.255.0\",\n        \"family\": \"IPv4\",\n        \"mac\": \"00:1a:2b:3c:4d:5e\",\n        \"internal\": false,\n        \"cidr\": \"192.168.1.100/24\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"address\": \"192.168.1.100\",\n        \"netmask\": \"255.255.255.0\",\n        \"family\": \"IPv6\",\n        \"mac\": \"00:1a:2b:3c:4d:5e\",\n        \"internal\": false,\n        \"cidr\": \"192.168.1.100/24\"\n      },\n      {\n        \"address\": \"192.168.1.100\",\n        \"netmask\": \"255.255.255.0\",\n        \"family\": \"IPv6\",\n        \"mac\": \"00:1a:2b:3c:4d:5e\",\n        \"internal\": true,\n        \"cidr\": \"192.168.1.100/24\"\n      }\n    ],\n    \"key_2\": [\n      {\n        \"address\": \"192.168.1.100\",\n        \"netmask\": \"255.255.255.0\",\n        \"family\": \"IPv4\",\n        \"mac\": \"00:1a:2b:3c:4d:5e\",\n        \"internal\": true,\n        \"cidr\": \"192.168.1.100/24\"\n      },\n      {\n        \"address\": \"192.168.1.100\",\n        \"netmask\": \"255.255.255.0\",\n        \"family\": \"IPv4\",\n        \"mac\": \"00:1a:2b:3c:4d:5e\",\n        \"internal\": false,\n        \"cidr\": \"192.168.1.100/24\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:45456",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8b13cfb0-afb1-4d06-90b7-b75d0280f93a",
+    "name": "HTTP Toolkit Server client config API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.\n\n\nContact Support:\n Name: HTTP Toolkit",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "item": [
+    {
+      "id": "8aae6099-3f26-4f04-9fab-05f1d949a91f",
+      "name": "client",
+      "description": {
+        "content": "HTTP client request sending through the proxy",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fcb0757d-02fa-4966-bce2-9ef339758fd0",
+          "name": "Send an HTTP request",
+          "request": {
+            "name": "Send an HTTP request",
+            "description": {
+              "content": "Sends an HTTP request through the proxy and streams back the response as newline-delimited JSON (NDJSON). The response stream emits typed events including response-start, response-body-part, and response-end. Request and response body data is base64-encoded.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/x-ndjson"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request\": {\n    \"method\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"rawBody\": \"<byte>\"\n  },\n  \"options\": {\n    \"trustAdditionalCAs\": \"<boolean>\",\n    \"clientCertificate\": {\n      \"pfx\": \"<byte>\",\n      \"passphrase\": \"<string>\"\n    },\n    \"proxyConfig\": {\n      \"key_0\": \"string\",\n      \"key_1\": 1698.336657965792,\n      \"key_2\": 6432\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e5845475-520a-4659-ad06-5b13ce9bc07e",
+              "name": "NDJSON stream of response events. Each line is a JSON object with a `type` field indicating the event type.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/x-ndjson"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request\": {\n    \"method\": \"GET\",\n    \"url\": \"https://example.com/api/data\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"rawBody\": \"<byte>\"\n  },\n  \"options\": {\n    \"trustAdditionalCAs\": \"<boolean>\",\n    \"clientCertificate\": {\n      \"pfx\": \"<byte>\",\n      \"passphrase\": \"<string>\"\n    },\n    \"proxyConfig\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/x-ndjson"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7a956215-710e-4279-8aa6-fb7acf4e70e1",
+              "name": "Bad request — missing or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request\": {\n    \"method\": \"GET\",\n    \"url\": \"https://example.com/api/data\",\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"rawBody\": \"<byte>\"\n  },\n  \"options\": {\n    \"trustAdditionalCAs\": \"<boolean>\",\n    \"clientCertificate\": {\n      \"pfx\": \"<byte>\",\n      \"passphrase\": \"<string>\"\n    },\n    \"proxyConfig\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:45456",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "804233ba-f19e-400e-ba21-db9735ece726",
+    "name": "HTTP Toolkit Server client API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.\n\n\nContact Support:\n Name: HTTP Toolkit",
+      "type": "text/plain"
+    }
+  }
+}

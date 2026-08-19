@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HTTP Toolkit Server client config API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "config",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get proxy configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:45456/config",
+            "params": [
+              {
+                "name": "proxyPort",
+                "value": "",
+                "type": "query",
+                "description": "The port number the Mockttp proxy is listening on. Optional — omit to query data before the proxy has started for potentially faster setup.\n"
+              }
+            ]
+          },
+          "docs": "Returns the current proxy configuration including certificate details, system proxy settings, DNS servers, and rule parameter keys.\n"
+        },
+        {
+          "info": {
+            "name": "Get network interfaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:45456/config/network-interfaces"
+          },
+          "docs": "Returns all available network interfaces on the host machine."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

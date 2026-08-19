@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HTTP Toolkit Server client interceptors API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "interceptors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List interceptors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:45456/interceptors",
+            "params": [
+              {
+                "name": "proxyPort",
+                "value": "",
+                "type": "query",
+                "description": "The port number the Mockttp proxy is listening on. Optional — omit to query data before the proxy has started for potentially faster setup.\n"
+              }
+            ]
+          },
+          "docs": "Returns top-level state of all available interceptors, including whether each is activable and currently active. Supports Docker, Android, Python, Ruby, Java, Electron, and JavaScript environments.\n"
+        },
+        {
+          "info": {
+            "name": "Get detailed interceptor metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:45456/interceptors/:id/metadata",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the interceptor"
+              }
+            ]
+          },
+          "docs": "Returns the complete detailed metadata for a specific interceptor, including all available targets and full configuration details beyond what is returned by the list endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Get sub-interceptor metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:45456/interceptors/:id/metadata/:subId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the interceptor"
+              },
+              {
+                "name": "subId",
+                "value": "",
+                "type": "path",
+                "description": "Sub-identifier for a specific target within the interceptor"
+              }
+            ]
+          },
+          "docs": "Returns even more detailed metadata about a specific sub-target within a multi-target interceptor (e.g., a specific browser profile or Android device).\n"
+        },
+        {
+          "info": {
+            "name": "Activate an interceptor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:45456/interceptors/:id/activate/:proxyPort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the interceptor"
+              },
+              {
+                "name": "proxyPort",
+                "value": "",
+                "type": "path",
+                "description": "Port number that the proxy is listening on"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activates a specific interceptor for the given proxy port, injecting the proxy configuration into the target application or environment. The result may include success:false for non-critical failures (e.g., Chrome prompt-to-quit scenarios) without throwing an error.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

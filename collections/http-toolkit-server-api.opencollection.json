@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HTTP Toolkit client server API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "server",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get server version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:45456/version"
+          },
+          "docs": "Returns the current version of the HTTP Toolkit server."
+        },
+        {
+          "info": {
+            "name": "Trigger server update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:45456/update"
+          },
+          "docs": "Initiates a server self-update process."
+        },
+        {
+          "info": {
+            "name": "Shutdown the server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:45456/shutdown"
+          },
+          "docs": "Shuts down the HTTP Toolkit server process."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
