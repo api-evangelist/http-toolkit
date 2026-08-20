@@ -33,6 +33,16 @@ tags:
 - Mocking
 - Testing
 - Developer Tools
+- Open-Source
+tags_raw:
+- HTTP
+- HTTPS
+- Debugging
+- Proxy
+- Interception
+- Mocking
+- Testing
+- Developer Tools
 - Open Source
 apis:
 - aid: http-toolkit:http-toolkit-client-api
@@ -41,6 +51,8 @@ apis:
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
   tags:
+  - Clients
+  tags_raw:
   - client
   properties:
   - type: OpenAPI
@@ -57,6 +69,8 @@ apis:
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
   tags:
+  - Config
+  tags_raw:
   - config
   properties:
   - type: OpenAPI
@@ -73,6 +87,8 @@ apis:
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
   tags:
+  - Interceptors
+  tags_raw:
   - interceptors
   properties:
   - type: OpenAPI
@@ -89,6 +105,8 @@ apis:
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
   tags:
+  - Server
+  tags_raw:
   - server
   properties:
   - type: OpenAPI
