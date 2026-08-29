@@ -4,6 +4,20 @@ description: HTTP Toolkit is a beautiful, cross-platform, and open-source tool f
   a REST API for intercepting HTTP/HTTPS traffic, inspecting requests and responses,
   automated mocking and rewriting of API traffic, and integrations with Docker, Android,
   Python, Ruby, Java, Electron, and JavaScript development workflows.
+deliveryModel:
+  model: open-core
+  license: AGPL-3.0
+  open_source: true
+  commercial: true
+  callable_host: false
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
