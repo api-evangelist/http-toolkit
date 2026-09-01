@@ -67,7 +67,7 @@ apis:
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
   tags:
-  - client
+  - Clients
   tags_raw:
   - client
   properties:
@@ -103,7 +103,7 @@ apis:
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
   tags:
-  - interceptors
+  - Interceptors
   tags_raw:
   - interceptors
   properties:
