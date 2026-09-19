@@ -42,7 +42,6 @@ aid: http-toolkit
 type: Index
 tags:
 - HTTP
-- HTTPS
 - Debugging
 - Proxy
 - Interception
@@ -121,7 +120,7 @@ apis:
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
   tags:
-  - Server
+  - Servers
   tags_raw:
   - server
   properties:
