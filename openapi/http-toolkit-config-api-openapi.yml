@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: HTTP Toolkit Server client config API
-  description: 'The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.
-
-    '
+  title: HTTP Toolkit Server client Config API
+  description: The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.
   version: 1.0.0
   contact:
     name: HTTP Toolkit
@@ -17,18 +15,16 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: config
+- name: Config
   description: Proxy configuration and network settings
 paths:
   /config:
     get:
       summary: Get proxy configuration
-      description: 'Returns the current proxy configuration including certificate details, system proxy settings, DNS servers, and rule parameter keys.
-
-        '
+      description: Returns the current proxy configuration including certificate details, system proxy settings, DNS servers, and rule parameter keys.
       operationId: getConfig
       tags:
-      - config
+      - Config
       parameters:
       - $ref: '#/components/parameters/ProxyPort'
       responses:
@@ -44,7 +40,7 @@ paths:
       description: Returns all available network interfaces on the host machine.
       operationId: getNetworkInterfaces
       tags:
-      - config
+      - Config
       responses:
         '200':
           description: List of network interfaces
@@ -79,6 +75,43 @@ components:
           items:
             type: string
           description: Keys of currently configured rule parameters
+    NetworkInterfacesResponse:
+      type: object
+      required:
+      - networkInterfaces
+      properties:
+        networkInterfaces:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/NetworkInterface'
+          description: Map of interface name to list of address entries
+    SystemProxy:
+      type: object
+      required:
+      - proxyUrl
+      properties:
+        proxyUrl:
+          type: string
+          format: uri
+          description: URL of the system proxy
+          example: http://proxy.example.com:8080
+        noProxy:
+          type: array
+          items:
+            type: string
+          description: Hosts that should bypass the proxy
+          example:
+          - localhost
+          - 127.0.0.1
+    ConfigResponse:
+      type: object
+      required:
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/ProxyConfig'
     NetworkInterface:
       type: object
       properties:
@@ -107,43 +140,6 @@ components:
           type: string
           description: CIDR notation for the address
           example: 192.168.1.100/24
-    SystemProxy:
-      type: object
-      required:
-      - proxyUrl
-      properties:
-        proxyUrl:
-          type: string
-          format: uri
-          description: URL of the system proxy
-          example: http://proxy.example.com:8080
-        noProxy:
-          type: array
-          items:
-            type: string
-          description: Hosts that should bypass the proxy
-          example:
-          - localhost
-          - 127.0.0.1
-    NetworkInterfacesResponse:
-      type: object
-      required:
-      - networkInterfaces
-      properties:
-        networkInterfaces:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/NetworkInterface'
-          description: Map of interface name to list of address entries
-    ConfigResponse:
-      type: object
-      required:
-      - config
-      properties:
-        config:
-          $ref: '#/components/schemas/ProxyConfig'
   parameters:
     ProxyPort:
       name: proxyPort

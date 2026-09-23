@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: HTTP Toolkit client server API
-  description: 'The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.
-
-    '
+  title: HTTP Toolkit client Server API
+  description: The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.
   version: 1.0.0
   contact:
     name: HTTP Toolkit
@@ -17,7 +15,7 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: server
+- name: Server
   description: Server lifecycle and version management
 paths:
   /version:
@@ -26,7 +24,7 @@ paths:
       description: Returns the current version of the HTTP Toolkit server.
       operationId: getVersion
       tags:
-      - server
+      - Server
       responses:
         '200':
           description: Server version information
@@ -42,7 +40,7 @@ paths:
       description: Initiates a server self-update process.
       operationId: updateServer
       tags:
-      - server
+      - Server
       responses:
         '200':
           description: Update triggered successfully
@@ -58,7 +56,7 @@ paths:
       description: Shuts down the HTTP Toolkit server process.
       operationId: shutdownServer
       tags:
-      - server
+      - Server
       responses:
         '200':
           description: Shutdown initiated

@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: HTTP Toolkit Server client interceptors API
-  description: 'The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.
-
-    '
+  title: HTTP Toolkit Server client Interceptors API
+  description: The backend REST API exposed by the HTTP Toolkit server, used to start and manage the local HTTP/HTTPS proxy, launch intercepted applications, manage interception rules, handle certificate operations, and send requests through the proxy. The server listens on localhost (default port 45456) and uses token-based authentication via the Authorization header.
   version: 1.0.0
   contact:
     name: HTTP Toolkit
@@ -17,18 +15,16 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: interceptors
+- name: Interceptors
   description: Interceptor management for various environments and applications
 paths:
   /interceptors:
     get:
       summary: List interceptors
-      description: 'Returns top-level state of all available interceptors, including whether each is activable and currently active. Supports Docker, Android, Python, Ruby, Java, Electron, and JavaScript environments.
-
-        '
+      description: Returns top-level state of all available interceptors, including whether each is activable and currently active. Supports Docker, Android, Python, Ruby, Java, Electron, and JavaScript environments.
       operationId: getInterceptors
       tags:
-      - interceptors
+      - Interceptors
       parameters:
       - $ref: '#/components/parameters/ProxyPort'
       responses:
@@ -41,12 +37,10 @@ paths:
   /interceptors/{id}/metadata:
     get:
       summary: Get detailed interceptor metadata
-      description: 'Returns the complete detailed metadata for a specific interceptor, including all available targets and full configuration details beyond what is returned by the list endpoint.
-
-        '
+      description: Returns the complete detailed metadata for a specific interceptor, including all available targets and full configuration details beyond what is returned by the list endpoint.
       operationId: getInterceptorMetadata
       tags:
-      - interceptors
+      - Interceptors
       parameters:
       - $ref: '#/components/parameters/InterceptorId'
       responses:
@@ -61,12 +55,10 @@ paths:
   /interceptors/{id}/metadata/{subId}:
     get:
       summary: Get sub-interceptor metadata
-      description: 'Returns even more detailed metadata about a specific sub-target within a multi-target interceptor (e.g., a specific browser profile or Android device).
-
-        '
+      description: Returns even more detailed metadata about a specific sub-target within a multi-target interceptor (e.g., a specific browser profile or Android device).
       operationId: getInterceptorSubMetadata
       tags:
-      - interceptors
+      - Interceptors
       parameters:
       - $ref: '#/components/parameters/InterceptorId'
       - name: subId
@@ -87,12 +79,10 @@ paths:
   /interceptors/{id}/activate/{proxyPort}:
     post:
       summary: Activate an interceptor
-      description: 'Activates a specific interceptor for the given proxy port, injecting the proxy configuration into the target application or environment. The result may include success:false for non-critical failures (e.g., Chrome prompt-to-quit scenarios) without throwing an error.
-
-        '
+      description: Activates a specific interceptor for the given proxy port, injecting the proxy configuration into the target application or environment. The result may include success:false for non-critical failures (e.g., Chrome prompt-to-quit scenarios) without throwing an error.
       operationId: activateInterceptor
       tags:
-      - interceptors
+      - Interceptors
       parameters:
       - $ref: '#/components/parameters/InterceptorId'
       - name: proxyPort
@@ -125,43 +115,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    InterceptorsResponse:
-      type: object
-      required:
-      - interceptors
-      properties:
-        interceptors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Interceptor'
-    ActivationResponse:
-      type: object
-      required:
-      - result
-      properties:
-        result:
-          type: object
-          additionalProperties: true
-          description: 'Activation result. May contain success:false for non-critical failures (e.g., Chrome confirmation dialogs) without an HTTP error.
-
-            '
-    InterceptorMetadataResponse:
-      type: object
-      required:
-      - interceptorMetadata
-      properties:
-        interceptorMetadata:
-          type: object
-          additionalProperties: true
-          description: Detailed metadata for the interceptor, structure varies by interceptor type
-    ErrorResponse:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Human-readable error message
     Interceptor:
       type: object
       required:
@@ -188,7 +141,51 @@ components:
           type: object
           additionalProperties: true
           description: Summary metadata specific to this interceptor type
+    ActivationResponse:
+      type: object
+      required:
+      - result
+      properties:
+        result:
+          type: object
+          additionalProperties: true
+          description: 'Activation result. May contain success:false for non-critical failures (e.g., Chrome confirmation dialogs) without an HTTP error.
+
+            '
+    InterceptorMetadataResponse:
+      type: object
+      required:
+      - interceptorMetadata
+      properties:
+        interceptorMetadata:
+          type: object
+          additionalProperties: true
+          description: Detailed metadata for the interceptor, structure varies by interceptor type
+    InterceptorsResponse:
+      type: object
+      required:
+      - interceptors
+      properties:
+        interceptors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Interceptor'
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
   parameters:
+    InterceptorId:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier of the interceptor
+      schema:
+        type: string
     ProxyPort:
       name: proxyPort
       in: query
@@ -200,22 +197,15 @@ components:
         type: integer
         minimum: 1
         maximum: 65535
-    InterceptorId:
-      name: id
-      in: path
-      required: true
-      description: Unique identifier of the interceptor
-      schema:
-        type: string
   responses:
-    BadRequest:
-      description: Bad request — missing or invalid parameters
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Resource not found
+    BadRequest:
+      description: Bad request — missing or invalid parameters
       content:
         application/json:
           schema:
