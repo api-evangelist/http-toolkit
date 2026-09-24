@@ -48,7 +48,7 @@ tags:
 - Mocking
 - Testing
 - Developer Tools
-- Open-Source
+- Open Source
 tags_raw:
 - HTTP
 - HTTPS
@@ -59,9 +59,10 @@ tags_raw:
 - Testing
 - Developer Tools
 - Open Source
+- Open-Source
 apis:
 - aid: http-toolkit:http-toolkit-client-api
-  name: HTTP Toolkit client API
+  name: HTTP Toolkit Client API
   description: HTTP client request sending through the proxy
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
@@ -76,10 +77,8 @@ apis:
     url: https://httptoolkit.com/docs/
   - type: GitHubRepository
     url: https://github.com/httptoolkit/httptoolkit-server
-  - type: GraphQL
-    url: graphql/http-toolkit-graphql.md
 - aid: http-toolkit:http-toolkit-config-api
-  name: HTTP Toolkit config API
+  name: HTTP Toolkit Config API
   description: Proxy configuration and network settings
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
@@ -94,10 +93,8 @@ apis:
     url: https://httptoolkit.com/docs/
   - type: GitHubRepository
     url: https://github.com/httptoolkit/httptoolkit-server
-  - type: GraphQL
-    url: graphql/http-toolkit-graphql.md
 - aid: http-toolkit:http-toolkit-interceptors-api
-  name: HTTP Toolkit interceptors API
+  name: HTTP Toolkit Interceptors API
   description: Interceptor management for various environments and applications
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
@@ -112,10 +109,8 @@ apis:
     url: https://httptoolkit.com/docs/
   - type: GitHubRepository
     url: https://github.com/httptoolkit/httptoolkit-server
-  - type: GraphQL
-    url: graphql/http-toolkit-graphql.md
 - aid: http-toolkit:http-toolkit-server-api
-  name: HTTP Toolkit server API
+  name: HTTP Toolkit Server API
   description: Server lifecycle and version management
   humanURL: https://httptoolkit.com/docs/
   baseURL: http://localhost:45456
@@ -130,8 +125,6 @@ apis:
     url: https://httptoolkit.com/docs/
   - type: GitHubRepository
     url: https://github.com/httptoolkit/httptoolkit-server
-  - type: GraphQL
-    url: graphql/http-toolkit-graphql.md
 common:
 - type: IssueTracker
   url: https://github.com/httptoolkit/httptoolkit-server/issues
