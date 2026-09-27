@@ -114,7 +114,46 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    BadRequest:
+      description: Bad request — missing or invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    InterceptorMetadataResponse:
+      type: object
+      required:
+      - interceptorMetadata
+      properties:
+        interceptorMetadata:
+          type: object
+          additionalProperties: true
+          description: Detailed metadata for the interceptor, structure varies by interceptor type
+    InterceptorsResponse:
+      type: object
+      required:
+      - interceptors
+      properties:
+        interceptors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Interceptor'
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
     Interceptor:
       type: object
       required:
@@ -152,32 +191,6 @@ components:
           description: 'Activation result. May contain success:false for non-critical failures (e.g., Chrome confirmation dialogs) without an HTTP error.
 
             '
-    InterceptorMetadataResponse:
-      type: object
-      required:
-      - interceptorMetadata
-      properties:
-        interceptorMetadata:
-          type: object
-          additionalProperties: true
-          description: Detailed metadata for the interceptor, structure varies by interceptor type
-    InterceptorsResponse:
-      type: object
-      required:
-      - interceptors
-      properties:
-        interceptors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Interceptor'
-    ErrorResponse:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Human-readable error message
   parameters:
     InterceptorId:
       name: id
@@ -197,19 +210,6 @@ components:
         type: integer
         minimum: 1
         maximum: 65535
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — missing or invalid parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

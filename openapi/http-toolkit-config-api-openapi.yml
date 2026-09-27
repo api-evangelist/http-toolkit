@@ -50,6 +50,52 @@ paths:
                 $ref: '#/components/schemas/NetworkInterfacesResponse'
 components:
   schemas:
+    SystemProxy:
+      type: object
+      required:
+      - proxyUrl
+      properties:
+        proxyUrl:
+          type: string
+          format: uri
+          description: URL of the system proxy
+          example: http://proxy.example.com:8080
+        noProxy:
+          type: array
+          items:
+            type: string
+          description: Hosts that should bypass the proxy
+          example:
+          - localhost
+          - 127.0.0.1
+    NetworkInterface:
+      type: object
+      properties:
+        address:
+          type: string
+          description: IP address of the interface
+          example: 192.168.1.100
+        netmask:
+          type: string
+          description: Subnet mask
+          example: 255.255.255.0
+        family:
+          type: string
+          enum:
+          - IPv4
+          - IPv6
+          description: Address family
+        mac:
+          type: string
+          description: MAC address
+          example: 00:1a:2b:3c:4d:5e
+        internal:
+          type: boolean
+          description: Whether this is a loopback interface
+        cidr:
+          type: string
+          description: CIDR notation for the address
+          example: 192.168.1.100/24
     ProxyConfig:
       type: object
       required:
@@ -87,24 +133,6 @@ components:
             items:
               $ref: '#/components/schemas/NetworkInterface'
           description: Map of interface name to list of address entries
-    SystemProxy:
-      type: object
-      required:
-      - proxyUrl
-      properties:
-        proxyUrl:
-          type: string
-          format: uri
-          description: URL of the system proxy
-          example: http://proxy.example.com:8080
-        noProxy:
-          type: array
-          items:
-            type: string
-          description: Hosts that should bypass the proxy
-          example:
-          - localhost
-          - 127.0.0.1
     ConfigResponse:
       type: object
       required:
@@ -112,34 +140,6 @@ components:
       properties:
         config:
           $ref: '#/components/schemas/ProxyConfig'
-    NetworkInterface:
-      type: object
-      properties:
-        address:
-          type: string
-          description: IP address of the interface
-          example: 192.168.1.100
-        netmask:
-          type: string
-          description: Subnet mask
-          example: 255.255.255.0
-        family:
-          type: string
-          enum:
-          - IPv4
-          - IPv6
-          description: Address family
-        mac:
-          type: string
-          description: MAC address
-          example: 00:1a:2b:3c:4d:5e
-        internal:
-          type: boolean
-          description: Whether this is a loopback interface
-        cidr:
-          type: string
-          description: CIDR notation for the address
-          example: 192.168.1.100/24
   parameters:
     ProxyPort:
       name: proxyPort
