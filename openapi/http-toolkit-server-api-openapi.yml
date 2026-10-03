@@ -68,15 +68,6 @@ paths:
                 success: true
 components:
   schemas:
-    SuccessResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-          example: true
     VersionResponse:
       type: object
       required:
@@ -86,6 +77,15 @@ components:
           type: string
           description: Semantic version string of the HTTP Toolkit server
           example: 1.3.2
+    SuccessResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+          example: true
   securitySchemes:
     bearerAuth:
       type: http
