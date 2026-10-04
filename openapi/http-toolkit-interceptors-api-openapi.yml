@@ -123,15 +123,6 @@ components:
         error:
           type: string
           description: Human-readable error message
-    InterceptorMetadataResponse:
-      type: object
-      required:
-      - interceptorMetadata
-      properties:
-        interceptorMetadata:
-          type: object
-          additionalProperties: true
-          description: Detailed metadata for the interceptor, structure varies by interceptor type
     Interceptor:
       type: object
       required:
@@ -158,15 +149,15 @@ components:
           type: object
           additionalProperties: true
           description: Summary metadata specific to this interceptor type
-    InterceptorsResponse:
+    InterceptorMetadataResponse:
       type: object
       required:
-      - interceptors
+      - interceptorMetadata
       properties:
-        interceptors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Interceptor'
+        interceptorMetadata:
+          type: object
+          additionalProperties: true
+          description: Detailed metadata for the interceptor, structure varies by interceptor type
     ActivationResponse:
       type: object
       required:
@@ -178,7 +169,23 @@ components:
           description: 'Activation result. May contain success:false for non-critical failures (e.g., Chrome confirmation dialogs) without an HTTP error.
 
             '
+    InterceptorsResponse:
+      type: object
+      required:
+      - interceptors
+      properties:
+        interceptors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Interceptor'
   parameters:
+    InterceptorId:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier of the interceptor
+      schema:
+        type: string
     ProxyPort:
       name: proxyPort
       in: query
@@ -190,13 +197,6 @@ components:
         type: integer
         minimum: 1
         maximum: 65535
-    InterceptorId:
-      name: id
-      in: path
-      required: true
-      description: Unique identifier of the interceptor
-      schema:
-        type: string
   responses:
     BadRequest:
       description: Bad request — missing or invalid parameters

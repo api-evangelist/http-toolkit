@@ -52,6 +52,52 @@ components:
         error:
           type: string
           description: Human-readable error message
+    RequestDefinition:
+      type: object
+      required:
+      - method
+      - url
+      properties:
+        method:
+          type: string
+          description: HTTP method
+          example: GET
+        url:
+          type: string
+          format: uri
+          description: Target URL
+          example: https://example.com/api/data
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          description: Request headers
+        rawBody:
+          type: string
+          format: byte
+          description: Base64-encoded request body
+    SendRequestBody:
+      type: object
+      required:
+      - request
+      - options
+      properties:
+        request:
+          $ref: '#/components/schemas/RequestDefinition'
+        options:
+          $ref: '#/components/schemas/RequestOptions'
+    RequestOptions:
+      type: object
+      properties:
+        trustAdditionalCAs:
+          type: boolean
+          description: Whether to trust additional CA certificates beyond system defaults
+        clientCertificate:
+          $ref: '#/components/schemas/ClientCertificate'
+        proxyConfig:
+          type: object
+          additionalProperties: true
+          description: Proxy configuration overrides for this specific request
     ClientCertificate:
       type: object
       required:
@@ -83,52 +129,6 @@ components:
         timestamp:
           type: number
           description: Performance timestamp when this event occurred
-    RequestDefinition:
-      type: object
-      required:
-      - method
-      - url
-      properties:
-        method:
-          type: string
-          description: HTTP method
-          example: GET
-        url:
-          type: string
-          format: uri
-          description: Target URL
-          example: https://example.com/api/data
-        headers:
-          type: object
-          additionalProperties:
-            type: string
-          description: Request headers
-        rawBody:
-          type: string
-          format: byte
-          description: Base64-encoded request body
-    RequestOptions:
-      type: object
-      properties:
-        trustAdditionalCAs:
-          type: boolean
-          description: Whether to trust additional CA certificates beyond system defaults
-        clientCertificate:
-          $ref: '#/components/schemas/ClientCertificate'
-        proxyConfig:
-          type: object
-          additionalProperties: true
-          description: Proxy configuration overrides for this specific request
-    SendRequestBody:
-      type: object
-      required:
-      - request
-      - options
-      properties:
-        request:
-          $ref: '#/components/schemas/RequestDefinition'
-        options:
-          $ref: '#/components/schemas/RequestOptions'
   responses:
     BadRequest:
       description: Bad request — missing or invalid parameters
