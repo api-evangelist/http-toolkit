@@ -50,13 +50,18 @@ paths:
                 $ref: '#/components/schemas/NetworkInterfacesResponse'
 components:
   schemas:
-    ConfigResponse:
+    NetworkInterfacesResponse:
       type: object
       required:
-      - config
+      - networkInterfaces
       properties:
-        config:
-          $ref: '#/components/schemas/ProxyConfig'
+        networkInterfaces:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/NetworkInterface'
+          description: Map of interface name to list of address entries
     ProxyConfig:
       type: object
       required:
@@ -82,36 +87,6 @@ components:
           items:
             type: string
           description: Keys of currently configured rule parameters
-    NetworkInterfacesResponse:
-      type: object
-      required:
-      - networkInterfaces
-      properties:
-        networkInterfaces:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/NetworkInterface'
-          description: Map of interface name to list of address entries
-    SystemProxy:
-      type: object
-      required:
-      - proxyUrl
-      properties:
-        proxyUrl:
-          type: string
-          format: uri
-          description: URL of the system proxy
-          example: http://proxy.example.com:8080
-        noProxy:
-          type: array
-          items:
-            type: string
-          description: Hosts that should bypass the proxy
-          example:
-          - localhost
-          - 127.0.0.1
     NetworkInterface:
       type: object
       properties:
@@ -140,6 +115,31 @@ components:
           type: string
           description: CIDR notation for the address
           example: 192.168.1.100/24
+    SystemProxy:
+      type: object
+      required:
+      - proxyUrl
+      properties:
+        proxyUrl:
+          type: string
+          format: uri
+          description: URL of the system proxy
+          example: http://proxy.example.com:8080
+        noProxy:
+          type: array
+          items:
+            type: string
+          description: Hosts that should bypass the proxy
+          example:
+          - localhost
+          - 127.0.0.1
+    ConfigResponse:
+      type: object
+      required:
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/ProxyConfig'
   parameters:
     ProxyPort:
       name: proxyPort

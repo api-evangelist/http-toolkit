@@ -114,6 +114,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    ProxyPort:
+      name: proxyPort
+      in: query
+      required: false
+      description: 'The port number the Mockttp proxy is listening on. Optional — omit to query data before the proxy has started for potentially faster setup.
+
+        '
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 65535
+    InterceptorId:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier of the interceptor
+      schema:
+        type: string
   schemas:
     ErrorResponse:
       type: object
@@ -123,6 +142,24 @@ components:
         error:
           type: string
           description: Human-readable error message
+    InterceptorsResponse:
+      type: object
+      required:
+      - interceptors
+      properties:
+        interceptors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Interceptor'
+    InterceptorMetadataResponse:
+      type: object
+      required:
+      - interceptorMetadata
+      properties:
+        interceptorMetadata:
+          type: object
+          additionalProperties: true
+          description: Detailed metadata for the interceptor, structure varies by interceptor type
     Interceptor:
       type: object
       required:
@@ -149,15 +186,6 @@ components:
           type: object
           additionalProperties: true
           description: Summary metadata specific to this interceptor type
-    InterceptorMetadataResponse:
-      type: object
-      required:
-      - interceptorMetadata
-      properties:
-        interceptorMetadata:
-          type: object
-          additionalProperties: true
-          description: Detailed metadata for the interceptor, structure varies by interceptor type
     ActivationResponse:
       type: object
       required:
@@ -169,43 +197,15 @@ components:
           description: 'Activation result. May contain success:false for non-critical failures (e.g., Chrome confirmation dialogs) without an HTTP error.
 
             '
-    InterceptorsResponse:
-      type: object
-      required:
-      - interceptors
-      properties:
-        interceptors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Interceptor'
-  parameters:
-    InterceptorId:
-      name: id
-      in: path
-      required: true
-      description: Unique identifier of the interceptor
-      schema:
-        type: string
-    ProxyPort:
-      name: proxyPort
-      in: query
-      required: false
-      description: 'The port number the Mockttp proxy is listening on. Optional — omit to query data before the proxy has started for potentially faster setup.
-
-        '
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 65535
   responses:
-    BadRequest:
-      description: Bad request — missing or invalid parameters
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Resource not found
+    BadRequest:
+      description: Bad request — missing or invalid parameters
       content:
         application/json:
           schema:
