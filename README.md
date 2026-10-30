@@ -64,45 +64,164 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-HTTP Toolkit is a beautiful, cross-platform, and open-source tool for debugging, testing, and building with HTTP(S) on Windows, Linux, and Mac. It provides one-click interception of HTTP/HTTPS traffic from browsers, mobile devices, Docker containers, and common language runtimes, enabling developers to inspect, mock, and rewrite live traffic in their development and testing workflows.
+HTTP Toolkit is a beautiful, cross-platform, and open-source tool for debugging, testing, and building with HTTP(S) on Windows, Linux, and Mac. It provides a REST API for intercepting HTTP/HTTPS traffic, inspecting requests and responses, automated mocking and rewriting of API traffic, and integrations with Docker, Android, Python, Ruby, Java, Electron, and JavaScript development workflows.
 
-## Links
+**Areas:** HTTP · Debugging · Proxy · Interception · Mocking · Testing · Developer Tools · Open Source
 
-- **Website:** https://httptoolkit.com
-- **Documentation:** https://httptoolkit.com/docs/
-- **Blog:** https://httptoolkit.com/blog/
-- **Pricing:** https://httptoolkit.com/pricing/
-- **GitHub Org:** https://github.com/httptoolkit
-- **Server Repository:** https://github.com/httptoolkit/httptoolkit-server
-- **LinkedIn:** https://www.linkedin.com/company/http-toolkit
-- **X (Twitter):** https://twitter.com/httptoolkit
-- **Bluesky:** https://bsky.app/profile/httptoolkit.com
-- **Mastodon:** https://mastodon.social/@httptoolkit
+## HTTP Toolkit on APIs.io
 
-## APIs
+Everything profiled for HTTP Toolkit is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/http-toolkit/](https://apis.io/providers/http-toolkit/)** — or go straight to one of the APIs or properties below.
 
-### HTTP Toolkit Server API
+### APIs (4)
 
-The HTTP Toolkit server exposes a local REST API and a GraphQL management API used by the web UI to manage proxy operations, interceptors, certificates, and application launches. The server runs entirely on localhost and uses token-based authentication for security.
+- [HTTP Toolkit Client API](https://apis.io/apis/http-toolkit/http-toolkit-client-api/) — HTTP client request sending through the proxy
+- [HTTP Toolkit Config API](https://apis.io/apis/http-toolkit/http-toolkit-config-api/) — Proxy configuration and network settings
+- [HTTP Toolkit Interceptors API](https://apis.io/apis/http-toolkit/http-toolkit-interceptors-api/) — Interceptor management for various environments and applications
+- [HTTP Toolkit Server API](https://apis.io/apis/http-toolkit/http-toolkit-server-api/) — Server lifecycle and version management
 
-- **REST API port:** 45456
-- **GraphQL management port:** 45457
-- **Authentication:** `HTK_SERVER_TOKEN` environment variable
-- **Source:** [src/api/rest-api.ts](https://github.com/httptoolkit/httptoolkit-server/blob/main/src/api/rest-api.ts)
+### Published properties
 
-## Plans
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-| Plan | Price | Key Features |
-|------|-------|-------------|
-| Hobbyist | Free | Basic interception, manual rewriting, built-in HTTP client |
-| Professional | ~$14/month | Automated mocking, API validation (2600+ APIs), import/export |
-| Team | Contact for pricing | All Pro features, centralized billing, team workspaces |
+#### GraphQL (1)
 
-Annual billing for Professional saves approximately 25%.
+GraphQL schemas.
 
-## Contents
+- [Moved to /providers/http-toolkit/](https://apis.io/graphqls/http-toolkit/http-toolkit-graphql/)
 
-- `apis.yml` — APIs.json 0.19 index for HTTP Toolkit
-- `plans/http-toolkit-plans-pricing.yml` — API Commons Plans 0.1 pricing details
-- `rate-limits/http-toolkit-rate-limits.yml` — API Commons Rate Limits 0.1
-- `finops/http-toolkit-finops.yml` — FinOps Framework FOCUS 1.0 cost analysis
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Http Toolkit Agentic Access](https://apis.io/agentic-access/http-toolkit/http-toolkit-agentic-access/)
+
+#### JSON Schema (3)
+
+The data models the API reads and writes.
+
+- [HTTP Toolkit Interceptor](https://apis.io/schemas/http-toolkit/http-toolkit-interceptor/)
+- [HTTP Toolkit Proxy Configuration](https://apis.io/schemas/http-toolkit/http-toolkit-proxy-config/)
+- [HTTP Toolkit Send Request](https://apis.io/schemas/http-toolkit/http-toolkit-send-request/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Http Toolkit Context](https://apis.io/jsonld/http-toolkit/http-toolkit-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [HTTP Toolkit Vocabulary](https://apis.io/vocabularies/http-toolkit/http-toolkit-vocabulary/)
+
+#### Examples (4)
+
+Example requests and responses.
+
+- [Activate Interceptor](https://apis.io/examples/http-toolkit/activate-interceptor/)
+- [Get Interceptors](https://apis.io/examples/http-toolkit/get-interceptors/)
+- [Get Version](https://apis.io/examples/http-toolkit/get-version/)
+- [Send Request](https://apis.io/examples/http-toolkit/send-request/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [HTTP Toolkit Server client API](https://apis.io/collections/http-toolkit/open-http-toolkit-client-api/)
+- [HTTP Toolkit Server client config API](https://apis.io/collections/http-toolkit/open-http-toolkit-config-api/)
+- [HTTP Toolkit Server client interceptors API](https://apis.io/collections/http-toolkit/open-http-toolkit-interceptors-api/)
+- [HTTP Toolkit client server API](https://apis.io/collections/http-toolkit/open-http-toolkit-server-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [HTTP Toolkit — jsonschema rules](https://apis.io/rules/http-toolkit/http-toolkit-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Http Toolkit Authentication](https://apis.io/security/http-toolkit/http-toolkit-authentication/)
+- [Http Toolkit Domain Security](https://apis.io/security/http-toolkit/http-toolkit-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Http Toolkit Plans Pricing](https://apis.io/plans/http-toolkit/http-toolkit-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Http Toolkit Rate Limits](https://apis.io/rate-limits/http-toolkit/http-toolkit-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Http Toolkit Finops](https://apis.io/finops/http-toolkit/http-toolkit-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://httptoolkit.com)
+- [Documentation](https://httptoolkit.com/docs/)
+- [Pricing](https://httptoolkit.com/pricing/)
+- [Blog](https://httptoolkit.com/blog/)
+
+## API Evangelist rating
+
+**Kin Score 31.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 62.5 |
+| Contract quality | 54.8 |
+| Contract governance | 9.8 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 18.4 |
+
+**Agent readiness 20.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/http-toolkit/](https://apis.io/providers/http-toolkit/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for HTTP Toolkit: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/http-toolkit/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
